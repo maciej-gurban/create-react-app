@@ -119,13 +119,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         include: paths.appSrc,
-        loader: 'babel',
-        // @remove-on-eject-begin
-        query: {
-          babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')],
-        },
-        // @remove-on-eject-end
+        loader: 'babel'
       },
       // The notation here is somewhat confusing.
       // "postcss" loader applies autoprefixer to our CSS.
@@ -260,3 +254,13 @@ module.exports = {
     tls: 'empty'
   }
 };
+
+// @remove-on-eject-begin
+// Override babel-loader options to not read .babelrc.
+var babelLoader = module.exports.module.loaders.find(l => l.loader === 'babel');
+babelLoader.query = babelLoader.query || {};
+babelLoader.query.babelrc = false;
+// We embed the preset instead of referring to it because otherwise
+// `env` options in the preset do not get taken into account.
+Object.assign(babelLoader.query, require('babel-preset-react-app'));
+// @remove-on-eject-end

@@ -37,6 +37,22 @@ module.exports = {
     }]
   ],
   env: {
+    development: {
+      plugins: [
+        // Adds component stack to warning messages
+        require.resolve('babel-plugin-transform-react-jsx-source'),
+        // Adds __self attribute to JSX which React will use for some warnings
+        require.resolve('babel-plugin-transform-react-jsx-self')
+      ]
+    },
+    test: {
+      plugins: [
+        // Adds component stack to warning messages
+        require.resolve('babel-plugin-transform-react-jsx-source'),
+        // Adds __self attribute to JSX which React will use for some warnings
+        require.resolve('babel-plugin-transform-react-jsx-self')
+      ]
+    },
     production: {
       plugins: [
         // Optimization: hoist JSX that never changes out of render()

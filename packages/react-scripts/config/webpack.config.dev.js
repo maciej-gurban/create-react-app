@@ -121,10 +121,6 @@ module.exports = {
         include: paths.appSrc,
         loader: 'babel',
         query: {
-          // @remove-on-eject-begin
-          babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')],
-          // @remove-on-eject-end
           // This is a feature of `babel-loader` for webpack (not Babel itself).
           // It enables caching results in ./node_modules/.cache/react-scripts/
           // directory for faster rebuilds. We use findCacheDir() because of:
@@ -226,3 +222,13 @@ module.exports = {
     tls: 'empty'
   }
 };
+
+// @remove-on-eject-begin
+// Override babel-loader options to not read .babelrc.
+var babelLoader = module.exports.module.loaders.find(l => l.loader === 'babel');
+babelLoader.query = babelLoader.query || {};
+babelLoader.query.babelrc = false;
+// We embed the preset instead of referring to it because otherwise
+// `env` options in the preset do not get taken into account.
+Object.assign(babelLoader.query, require('babel-preset-react-app'));
+// @remove-on-eject-end

@@ -8,6 +8,8 @@
 
 const babelJest = require('babel-jest');
 
-module.exports = babelJest.createTransformer({
-  presets: [require.resolve('babel-preset-react-app')]
-});
+module.exports = babelJest.createTransformer(
+  // We embed the preset instead of referring to it because otherwise
+  // `env` options in the preset do not get taken into account.
+  require('babel-preset-react-app')
+);
